@@ -213,7 +213,8 @@ simulateDE <- function(SetupRes,
                        DEFilter = FALSE,
                        Counts = FALSE,
                        NCores = NULL,
-                       verbose = TRUE) {
+                       verbose = TRUE,
+                       path_count="") {
 
   if(!is.null(NCores) && DEmethod %in% c("edgeR-LRT", "edgeR-QL", "edgeR-zingeR", "DESeq2-zingeR", 'limma-voom', "limma-trend", "NOISeq", "EBSeq", "ROTS")) {
     if(verbose) {message(paste0(DEmethod, " has no parallel computation option!"))}
@@ -571,6 +572,27 @@ simulateDE <- function(SetupRes,
         length.data = NULL
       }
 
+      
+      
+      
+      
+      ## save simulate readcount
+      if(path_count != "") {
+        num_sample = paste0(Nrep1, " vs. ", Nrep2)
+        num_simu = paste0("simu", i)
+        path_out = file.path(path_count, num_simu, num_sample)
+        file_out = file.path(path_out, "readcounts.tsv")
+        dir.create(path_out, recursive = TRUE, showWarnings = FALSE)
+        write.table(count.data, file_out, row.names = FALSE)
+      }
+      
+      
+      
+      
+      
+      
+      
+      
       ## Run DE detection
       start.time.DE <- proc.time()
       if(!isTRUE(tmp.simOpts$Pipeline$DEFilter)) {
