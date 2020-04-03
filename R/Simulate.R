@@ -575,7 +575,7 @@ simulateDE <- function(SetupRes,
       
       
       
-      
+      ###############################################
       ## save simulate readcount
       if(path_count != "") {
         num_sample = paste0(Nrep1, " vs. ", Nrep2)
@@ -585,7 +585,7 @@ simulateDE <- function(SetupRes,
         dir.create(path_out, recursive = TRUE, showWarnings = FALSE)
         write.table(count.data, file_out, row.names = FALSE)
       }
-      
+      ################################################
       
       
       
