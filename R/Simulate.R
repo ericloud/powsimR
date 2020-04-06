@@ -578,19 +578,18 @@ simulateDE <- function(SetupRes,
       ###############################################
       ## save simulate readcount
       if(path_count != "") {
-        num_sample = paste0(Nrep1, " vs. ", Nrep2)
+        num_sample = paste0(Nrep1, "vs", Nrep2)
         num_simu = paste0("simu", i)
         path_out = file.path(path_count, num_simu, num_sample, "raw")
         file_out = file.path(path_out, "readcounts.tsv")
         dir.create(path_out, recursive = TRUE, showWarnings = FALSE)
-        df_count = df <- data.frame(id = seq(1, length(count.data[,1]), 1), as.data.frame(count.data))
+        df_count = df <- data.frame(ID = paste0("gene_", seq(1, length(count.data[,1]), 1)), as.data.frame(count.data))
         write.table(df_count, file_out, row.names = FALSE, sep="\t", quote=FALSE)
         
         path_out = file.path(path_count, num_simu, num_sample, "norm")
         file_out = file.path(path_out, "readcounts.tsv")
         dir.create(path_out, recursive = TRUE, showWarnings = FALSE)
-        str(norm.data)
-        df_count = df <- data.frame(id = seq(1, length(norm.data$NormCounts[,1]), 1), as.data.frame(norm.data$NormCounts))
+        df_count = df <- data.frame(ID = paste0("gene_", seq(1, length(norm.data$NormCounts[,1]), 1)), as.data.frame(norm.data$NormCounts))
         write.table(df_count, file_out, row.names = FALSE, sep="\t", quote=FALSE)
       }
       ################################################
