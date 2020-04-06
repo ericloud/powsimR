@@ -580,10 +580,11 @@ simulateDE <- function(SetupRes,
       if(path_count != "") {
         num_sample = paste0(Nrep1, " vs. ", Nrep2)
         num_simu = paste0("simu", i)
-        path_out = file.path(path_count, num_simu, num_sample)
+        path_out = file.path(path_count, num_simu, num_sample, "raw")
         file_out = file.path(path_out, "readcounts.tsv")
         dir.create(path_out, recursive = TRUE, showWarnings = FALSE)
-        write.table(count.data, file_out, row.names = FALSE)
+        df_count = df <- data.frame(id = seq(1, length(count.data[,1]), 1), as.data.frame(count.data))
+        write.table(df_count, file_out, row.names = FALSE, sep="\t", quote="false")
       }
       ################################################
       
@@ -609,7 +610,25 @@ simulateDE <- function(SetupRes,
                           NCores=tmp.simOpts$Pipeline$NCores,
                           verbose=verbose)
       }
+      
+      
+      
       if(isTRUE(tmp.simOpts$Pipeline$DEFilter)) {
+        
+        
+        ###############################################
+        ## save simulate readcount
+        if(path_count != "") {
+          num_sample = paste0(Nrep1, " vs. ", Nrep2)
+          num_simu = paste0("simu", i)
+          path_out = file.path(path_count, num_simu, num_sample, "norm")
+          file_out = file.path(path_out, "readcounts.tsv")
+          dir.create(path_out, recursive = TRUE, showWarnings = FALSE)
+          df_count = df <- data.frame(id = seq(1, length(fornorm.count.data[,1]), 1), as.data.frame(fornorm.count.data))
+          write.table(df_count, file_out, row.names = FALSE, sep="\t", quote="false")
+        }
+        ################################################
+        
         if (verbose) { message(paste0("Applying ", tmp.simOpts$Pipeline$DEmethod,
                                       " for DE analysis on imputed/filtered count data.")) }
         res.de = .de.calc(DEmethod=tmp.simOpts$Pipeline$DEmethod,
