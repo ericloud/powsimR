@@ -460,6 +460,7 @@
   resT <- limma::topTable(fit=fit, coef=2, number=Inf, adjust.method = "BH", sort.by = "none")
 
   # construct results
+  print(length(resT$P.Value))
   result <- data.frame(geneIndex=rownames(resT),
                        pval=resT$P.Value,
                        fdr=rep(NA, nrow(resT)),
