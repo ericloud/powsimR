@@ -440,7 +440,6 @@
   # run DE testing
   p.DE <- DEOpts$p.DE
   design.mat <- stats::model.matrix( ~ DEOpts$designs)
-  print(design.mat)
   y <- new("EList")
   y$E <- edgeR::cpm(dge, log = TRUE, prior.count = 3)
 
@@ -460,7 +459,6 @@
   resT <- limma::topTable(fit=fit, coef=2, number=Inf, adjust.method = "BH", sort.by = "none")
 
   # construct results
-  print(length(resT$P.Value))
   result <- data.frame(geneIndex=rownames(resT),
                        pval=resT$P.Value,
                        fdr=rep(NA, nrow(resT)),

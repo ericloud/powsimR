@@ -685,10 +685,10 @@ simulateDE <- function(SetupRes,
         path_out = file.path(path_count, num_simu, num_sample, "raw")
         file_out = file.path(path_out, "readcounts.tsv")
         dir.create(path_out, recursive = TRUE, showWarnings = FALSE)
-        print(nrow(sim.cnts))
         df_count = matrix(0, nrow = nrow(sim.cnts), ncol = Nrep1 + Nrep2)
         df_count[ixx.de.valid,] = count.data
         df_count = data.frame(ID = paste0("gene_", seq(1, nrow(sim.cnts))), as.data.frame(df_count))
+        colnames(df_count) = c("ID", colnames(count.data))
         write.table(df_count, file_out, row.names = FALSE, sep="\t", quote=FALSE)
         
         path_out = file.path(path_count, num_simu, num_sample, "norm")
@@ -696,6 +696,7 @@ simulateDE <- function(SetupRes,
         dir.create(path_out, recursive = TRUE, showWarnings = FALSE)
         df_count[ixx.de.valid,] = norm.data$NormCounts[,1]
         df_count = data.frame(ID = paste0("gene_", seq(1, nrow(sim.cnts), 1)), as.data.frame(df_count))
+        colnames(df_count) = c("ID", colnames(norm.data$NormCounts[,1]))
         write.table(df_count, file_out, row.names = FALSE, sep="\t", quote=FALSE)
       }
       ################################################
