@@ -689,9 +689,9 @@ simulateDE <- function(SetupRes,
         df_count[ixx.de.valid,] = count.data
         df_count = data.frame(ID = paste0("gene_", seq(1, nrow(sim.cnts))), as.data.frame(df_count))
         str(count.data)
-        print(attr(count.data))
-        str(attr(count.data))
-        colnames(df_count) = c("ID", attributes(count.data)[[2]])
+        print(dimnames(count.data))
+        str(dimnames(count.data))
+        colnames(df_count) = c("ID", dimnames(count.data)[[2]])
         write.table(df_count, file_out, row.names = FALSE, sep="\t", quote=FALSE)
         
         path_out = file.path(path_count, num_simu, num_sample, "norm")
@@ -699,7 +699,7 @@ simulateDE <- function(SetupRes,
         dir.create(path_out, recursive = TRUE, showWarnings = FALSE)
         df_count[ixx.de.valid,] = norm.data$NormCounts[,1]
         df_count = data.frame(ID = paste0("gene_", seq(1, nrow(sim.cnts), 1)), as.data.frame(df_count))
-        colnames(df_count) = c("ID", attributes(count.data)[[2]])
+        colnames(df_count) = c("ID", dimnames(count.data)[[2]])
         write.table(df_count, file_out, row.names = FALSE, sep="\t", quote=FALSE)
       }
       ################################################
