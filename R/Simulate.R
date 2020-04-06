@@ -685,6 +685,7 @@ simulateDE <- function(SetupRes,
         path_out = file.path(path_count, num_simu, num_sample, "raw")
         file_out = file.path(path_out, "readcounts.tsv")
         dir.create(path_out, recursive = TRUE, showWarnings = FALSE)
+        print(nrow(sim.cnts))
         df_count = matrix(0, nrow = nrow(sim.cnts), ncol = Nrep1 + Nrep2)
         df_count[ixx.de.valid,] = count.data
         df_count = df <- data.frame(ID = paste0("gene_", seq(1, nrow(sim.cnts)), as.data.frame(df_count))
