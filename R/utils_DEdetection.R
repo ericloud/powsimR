@@ -440,6 +440,7 @@
   # run DE testing
   p.DE <- DEOpts$p.DE
   design.mat <- stats::model.matrix( ~ DEOpts$designs)
+  print(design.mat)
   y <- new("EList")
   y$E <- edgeR::cpm(dge, log = TRUE, prior.count = 3)
 
