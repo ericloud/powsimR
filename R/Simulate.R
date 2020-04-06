@@ -571,34 +571,6 @@ simulateDE <- function(SetupRes,
       if(is.null(Length.data)) {
         length.data = NULL
       }
-
-      
-      
-      
-      ###############################################
-      ## save simulate readcount
-      if(path_count != "") {
-        num_sample = paste0(Nrep1, "vs", Nrep2)
-        num_simu = paste0("simu", i)
-        path_out = file.path(path_count, num_simu, num_sample, "raw")
-        file_out = file.path(path_out, "readcounts.tsv")
-        dir.create(path_out, recursive = TRUE, showWarnings = FALSE)
-        df_count = df <- data.frame(ID = paste0("gene_", seq(1, length(count.data[,1]), 1)), as.data.frame(count.data))
-        write.table(df_count, file_out, row.names = FALSE, sep="\t", quote=FALSE)
-        
-        path_out = file.path(path_count, num_simu, num_sample, "norm")
-        file_out = file.path(path_out, "readcounts.tsv")
-        dir.create(path_out, recursive = TRUE, showWarnings = FALSE)
-        df_count = df <- data.frame(ID = paste0("gene_", seq(1, length(norm.data$NormCounts[,1]), 1)), as.data.frame(norm.data$NormCounts))
-        write.table(df_count, file_out, row.names = FALSE, sep="\t", quote=FALSE)
-      }
-      ################################################
-      
-      
-      
-      
-      
-      
       
       ## Run DE detection
       start.time.DE <- proc.time()
@@ -704,7 +676,31 @@ simulateDE <- function(SetupRes,
       true.mu.tmp = gene.data$mus
       true.disp.tmp = gene.data$disps
       true.p0.tmp = gene.data$drops
-
+      
+      ###############################################
+      ## save simulate readcount
+      if(path_count != "") {
+        num_sample = paste0(Nrep1, "vs", Nrep2)
+        num_simu = paste0("simu", i)
+        path_out = file.path(path_count, num_simu, num_sample, "raw")
+        file_out = file.path(path_out, "readcounts.tsv")
+        dir.create(path_out, recursive = TRUE, showWarnings = FALSE)
+        df_count = matrix(0, nrow = nrow(sim.cnts), ncol = Nrep1 + Nrep2)
+        df_count[ixx.de.valid,] = count.data
+        df_count = df <- data.frame(ID = paste0("gene_", seq(1, nrow(sim.cnts)), as.data.frame(df_count))
+        write.table(df_count, file_out, row.names = FALSE, sep="\t", quote=FALSE)
+        
+        path_out = file.path(path_count, num_simu, num_sample, "norm")
+        file_out = file.path(path_out, "readcounts.tsv")
+        dir.create(path_out, recursive = TRUE, showWarnings = FALSE)
+        df_count[ixx.de.valid,] = norm.data$NormCounts[,1]
+        df_count = df <- data.frame(ID = paste0("gene_", seq(1, nrow(sim.cnts), 1)), as.data.frame(df_count))
+        write.table(df_count, file_out, row.names = FALSE, sep="\t", quote=FALSE)
+      }
+      ################################################
+      
+      
+      
       # copy it in 3D array of results
       pvalues[,j,i] = pval
       fdrs[,j,i] = fdr
