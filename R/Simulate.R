@@ -590,8 +590,7 @@ simulateDE <- function(SetupRes,
         file_out = file.path(path_out, "readcounts.tsv")
         dir.create(path_out, recursive = TRUE, showWarnings = FALSE)
         str(norm.data)
-        head(norm.data)
-        df_count = df <- data.frame(id = seq(1, length(norm.data[,1]), 1), as.data.frame(norm.data))
+        df_count = df <- data.frame(id = seq(1, length(norm.data$NormCounts[,1]), 1), as.data.frame(norm.data$NormCounts))
         write.table(df_count, file_out, row.names = FALSE, sep="\t", quote=FALSE)
       }
       ################################################
