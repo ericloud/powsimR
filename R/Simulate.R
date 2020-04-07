@@ -689,8 +689,8 @@ simulateDE <- function(SetupRes,
         df_count[ixx.de.valid,] = count.data
         df_count = data.frame(ID = paste0("gene_", seq(1, nrow(sim.cnts))), as.data.frame(df_count))
         str(count.data)
-        print(dimnames(count.data))
-        str(dimnames(count.data))
+        print(dimnames(count.data)[[2]])
+        str(dimnames(count.data)[[2]])
         colnames(df_count) = c("ID", dimnames(count.data)[[2]])
         write.table(df_count, file_out, row.names = FALSE, sep="\t", quote=FALSE)
         
