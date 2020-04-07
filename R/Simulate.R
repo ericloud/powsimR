@@ -695,7 +695,8 @@ simulateDE <- function(SetupRes,
         file_out = file.path(path_out, "readcounts.tsv")
         dir.create(path_out, recursive = TRUE, showWarnings = FALSE)
         df_count = matrix(0, nrow = nrow(sim.cnts), ncol = Nrep1 + Nrep2)
-        df_count[ixx.de.valid,] = norm.data$NormCounts[,1]
+        print(head(norm.data$NormCounts))
+        df_count[ixx.de.valid,] = norm.data$NormCounts
         df_count = data.frame(ID = paste0("gene_", seq(1, nrow(sim.cnts), 1)), as.data.frame(df_count))
         colnames(df_count) = c("ID", dimnames(count.data)[[2]])
         write.table(df_count, file_out, row.names = FALSE, sep="\t", quote=FALSE)
