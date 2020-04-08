@@ -908,6 +908,10 @@ evaluateDE <- function(simRes, alpha.type=c("adjusted","raw"),
       ## update Zg flags after filtering
       Zg = Zg[ix.keep]
       Zg2 = Zg2[ix.keep]
+      print("zg")
+      print(zg)
+      print("zg2")
+      print(zg2)
 
       #  number of strata genes and diff strata genes in output table
       xgrl[,j,i] = table(xgr)
