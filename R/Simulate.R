@@ -212,6 +212,7 @@ simulateDE <- function(SetupRes,
                                     "MAST", "BPSC", "scDD", "DECENT"),
                        DEFilter = FALSE,
                        Counts = FALSE,
+                       CountsNorm = FALSE,
                        NCores = NULL,
                        verbose = TRUE,
                        path_count="") {
@@ -341,9 +342,20 @@ simulateDE <- function(SetupRes,
     })
     names(cnts) = my.names
   }
+  
+  if(isTRUE(CountsNorm)){
+    cnts_norm <- lapply(1:length(my.names), function(x) {
+      vector("list", SetupRes$DESetup$nsims)
+    })
+    names(cnts_norm) = my.names
+  }
 
   if(isFALSE(Counts)){
     cnts = NULL
+  }
+  
+  if(isFALSE(CountsNorm)){
+    cnts_norm = NULL
   }
 
   ## start simulation
@@ -625,6 +637,10 @@ simulateDE <- function(SetupRes,
           cnts[[j]][[i]] <- count.data
         }
       }
+      if(isTRUE(Counts_norm)){
+        if (verbose) { message(paste0("Saving norm simulated counts.")) }
+        cnts_norm[[j]][[i]] <- norm.data$NormCounts
+      }
 
       # adapt scale factor matrices to use in param estimation
       if(attr(norm.data, 'normFramework') %in% c("SCnorm", "Linnorm", "scTransform")) {
@@ -775,7 +791,8 @@ simulateDE <- function(SetupRes,
 
   res.out <- c(SetupRes,
                SimulateRes=list(Simulate),
-               Counts = list(cnts))
+               Counts = list(cnts),
+               CountsNorm = list(cnts_norm))
 
   return(res.out)
 }
