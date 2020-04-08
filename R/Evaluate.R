@@ -909,9 +909,9 @@ evaluateDE <- function(simRes, alpha.type=c("adjusted","raw"),
       Zg = Zg[ix.keep]
       Zg2 = Zg2[ix.keep]
       print("zg")
-      print(zg)
+      print(Zg)
       print("zg2")
-      print(zg2)
+      print(Zg2)
       print("x")
       print(x)
 
