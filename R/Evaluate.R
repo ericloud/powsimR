@@ -912,6 +912,8 @@ evaluateDE <- function(simRes, alpha.type=c("adjusted","raw"),
       print(zg)
       print("zg2")
       print(zg2)
+      print("x")
+      print(x)
 
       #  number of strata genes and diff strata genes in output table
       xgrl[,j,i] = table(xgr)
