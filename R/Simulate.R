@@ -637,7 +637,7 @@ simulateDE <- function(SetupRes,
           cnts[[j]][[i]] <- count.data
         }
       }
-      if(isTRUE(Counts_norm)){
+      if(isTRUE(CountsNorm)){
         if (verbose) { message(paste0("Saving norm simulated counts.")) }
         cnts_norm[[j]][[i]] <- norm.data$NormCounts
       }
